@@ -25,8 +25,10 @@ export class AuthGuard implements CanActivate {
         const unique_id=request.headers['unique_id'];
         const bearer_token=auth.split(' ')[1];
         const payload:any=await jwt.verify(bearer_token.toString(),"strongkey");
+        console.log(payload);
         const user_guid=(payload.user_guid);
-        const result=await this.tokenservice.GetToken(user_guid,unique_id);
+        const uid=payload.uid;
+        const result=await this.tokenservice.GetToken(user_guid,unique_id,uid);
         console.log(result);
         return result;
     }
